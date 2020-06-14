@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block content %}
+<div id="create_forum">
+    <div id="create_forum_container">
+        <form method="POST" action="{{ url_for('forums.create_forum') }}">
+            <div></div>
+            {{ form.hidden_tag() }}
+            <h4> Create Forum </h4>
+            {{ form.name.label() }}
+            {{ form.name() }}
+            {% if form.name.errors %}
+                {% for error in form.name.errors %}
+                    <span class="error_message"> {{ error }} </span>
+                {% endfor %}
+            {% endif %}
+            
+            {{ form.about.label() }}
+            {{ form.about() }}
+            {% if form.about.errors %}
+                {% for error in form.about.errors %}
+                    <span> {{ error }} </span>
+                {% endfor %}
+            {% endif %}
+            {{ form.submit(class="create_forum_button") }}
+        </form>
+    </div>
+</div>
+{% endblock content %}

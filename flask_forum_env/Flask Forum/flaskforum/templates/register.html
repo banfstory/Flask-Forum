@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block content %}
+<div id="regisForm">
+    <div id="regisContainer">
+        <form method="POST" action="{{ url_for('users.register') }}">
+            {{ form.hidden_tag() }}
+            <span class="regis_heading"> Join Flask Forum! </span>
+            <div class="regis_input">
+                {{ form.username(placeholder="Username") }}
+                {% if form.username.errors %}
+                    {% for error in form.username.errors %}
+                        <span class="error_message"> {{ error }} </span>
+                    {% endfor %}
+                {% endif %}
+
+                {{ form.email(placeholder="Email") }}
+                {% if form.email.errors %}
+                    {% for error in form.email.errors %}
+                        <span class="error_message"> {{ error }} </span>
+                    {% endfor %}
+                {% endif %}
+
+                {{ form.password(placeholder="Password") }}
+
+                {{ form.confirm_password(placeholder="Confirm Password") }}
+                {% if form.confirm_password.errors %}
+                    {% for error in form.confirm_password.errors %}
+                        <span class="error_message"> {{ error }} </span>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            {{ form.submit(class="regis_button") }}
+            <a href="{{ url_for('users.login') }}"> Already have an account? </a>
+        </form>
+    </div>
+</div>
+{% endblock content %}

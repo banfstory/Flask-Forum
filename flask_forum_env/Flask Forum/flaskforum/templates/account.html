@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block content %}
+<div id="accountForm">
+    <div id="accountContainer">
+        <div class="profile flex-no_space" class="flex-no_space">
+            <img src="{{ image_file }}" height="125" width="125">
+            <div class="profile_details">
+                <span class="user_account"> {{ current_user.username }} </span>
+                <span class="email_account"> {{ current_user.email }} </span>
+            </div>
+        </div>
+
+        {% if current_user.display_picture != 'default.png' %} 
+            <form method="POST" action="{{ url_for('users.account_remove_pic', id=current_user.id) }}">    
+                <button class="delete_user_pic"> Remove Profile Picture </button>
+            </form>
+        {% endif %}
+
+        <form method="POST" action="{{ url_for('users.account') }}" enctype="multipart/form-data">    
+            <div class="account_details">
+                <h4> Update Account </h4>
+                {{ form.hidden_tag() }}
+                {{ form.username.label() }}
+                {{ form.username() }}
+                {% if form.username.errors %}
+                {% for error in form.username.errors %}
+                    <span class="error_message"> {{ error }} </span>
+                {% endfor %}
+                {% endif %}
+                {{ form.email.label() }}
+                {{ form.email() }}
+                {% if form.email.errors %}
+                {% for error in form.email.errors %}
+                    <span class="error_message"> {{ error }} </span>
+                {% endfor %}
+                {% endif %}
+                {{ form.picture.label() }}
+                {{ form.picture(class="update_user_pic") }}
+                {% if form.picture.errors %}
+                    {% for error in form.picture.errors %}
+                        <span class="error_message"> {{ error }} </span>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            {{ form.submit(class="update_acc_button") }}
+        </form>
+    </div>
+</div>
+{% endblock content %}

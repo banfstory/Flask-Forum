@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block content %}
+<div id="update_forum">
+    <div id="update_forum_container">
+        <div class="forum_profile flex-no_space">
+            <img src="{{ image_file }}" height="125" width="125">
+            <span class="forum_name"> {{ forum.name }} </span>
+        </div>
+
+        {% if forum.display_picture != 'default.png' %} 
+            <form method="POST" action="{{ url_for('forums.forum_remove_pic', id=forum.id) }}">    
+                <button class="delete_forum_pic"> Remove Forum Picture </button>
+            </form>
+        {% endif %}
+
+        <form method="POST" action="{{ url_for('forums.update_forum', id=forum.id) }}" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <h4> Update Forum </h4>
+            {{ form.about.label() }}
+            {{ form.about() }}
+            {% if form.about.errors %}
+                {% for error in form.about.errors %}
+                    <span class="error_message"> {{ error }} </span>
+                {% endfor %}
+            {% endif %}
+        
+            {{ form.picture.label() }}
+            {{ form.picture(class="update_forum_pic") }}
+            {{ form.submit(class="update_forum_button") }}
+            {% if form.picture.errors %}
+                {% for error in form.picture.errors %}
+                    <span class="error_message"> {{ error }} </span>
+                {% endfor %}
+            {% endif %}
+        </form>
+    </div>
+</div>
+{% endblock content %}

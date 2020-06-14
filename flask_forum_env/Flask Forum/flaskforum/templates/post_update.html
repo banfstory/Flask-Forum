@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block content %}
+<div id="update_post">
+    <div id="update_post_container">
+        <form method="POST" action="{{ url_for('forums.update_post', id=post.id) }}">
+            {{ form.hidden_tag() }}
+            <h4> Update Post for {{ forum.name }} </h4>
+            {{ form.title.label() }}
+            {% if form.title.errors %}
+                {% for error in form.title.errors %}
+                    <span class="error_message"> {{ error }} </span>
+                {% endfor %}
+            {% endif %}
+            {{ form.title() }}
+        
+            {{ form.content.label() }}
+            {% if form.content.errors %}
+                {% for error in form.content.errors %}
+                    <span class="error_message"> {{ error }} </span>
+                {% endfor %}
+            {% endif %}
+            {{ form.content() }}
+            
+            {{ form.submit(class="update_post_button") }}
+        </form>
+    </div>
+</div>
+{% endblock content %}

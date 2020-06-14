@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div id="forum">
+        <section>
+            <h1> RECENT POSTS </h1>
+            {% for post in posts.items %}
+                <article class="article_post">
+                    <div class="post_heading flex-no_space">  
+                        <a href="{{ url_for('forums.forum', name=post[0].forum.name) }}"><img src="{{ url_for('static', filename='forum_pics/' + post[0].forum.display_picture) }}" height="25" width="25"></a> 
+                        <span class="post_forum"> 
+                            <a href="{{ url_for('forums.forum', name=post[0].forum.name) }}"> {{ post[0].forum.name }} </a> 
+                            <span class="post_user">  Posted by  <a href="{{ url_for('users.user_posts',username=post[0].author.username) }}"> {{ post[0].author.username }} </a> </span> 
+                            <span class="time">  
+                                {% if post[1] < 1 %} {{ (post[1] * 60) |round|int }} minutes ago {% elif post[1] < 24 %} {{ post[1] |round|int }} hours ago  {% elif post[1] / 24 < 7 %} {{ (post[1] / 24) |round|int }} days ago
+                                {% elif post[1] / 24 < 30 %} {{ (post[1] / 24 / 7) |round|int }} weeks ago {% elif post[1] / 24 < 365 %} {{ (post[1] / 24 / 30) |round|int }} months ago 
+                                {% else %} {{ (post[1] / 24 / 365) |round|int }} years ago {% endif %}
+                            </span>  
+                        </span>
+                    </div>
+                    <div class="post_link">
+                        <a href="{{ url_for('forums.comments', id=post[0].id) }}">
+                            <div class="post_title"> {{ post[0].title }} </div> 
+                            <p class="post_content"> {{ post[0].content }} </p>
+                            <div class="post_comm_count"> {{ post[2] }} Comments </div>
+                        </a>
+                    </div>
+                </article>
+            {% endfor %} 
+            <div class="pagination_bar">
+                {% for page_num in posts.iter_pages(left_edge=3, right_edge=3, left_current=3, right_current=5) %}
+                    {% if page_num %}
+                        {% if posts.page == page_num %}
+                            <a href="{{ url_for('main.home', page=page_num) }}" class="page_active"> {{ page_num }} </a>
+                        {% else %}
+                            <a href="{{ url_for('main.home', page=page_num) }}"> {{ page_num }} </a>
+                        {% endif %}
+                    {% else %}
+                        <span> ... </span>
+                    {% endif %}
+                {%  endfor %}
+            </div>
+        </section>
+    </div>
+{% endblock content %}

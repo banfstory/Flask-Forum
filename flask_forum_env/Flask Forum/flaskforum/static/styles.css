@@ -1,0 +1,1707 @@
+* { box-sizing: border-box }
+
+html, body {
+    padding:0;
+    margin:0;
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    overflow: auto;
+}
+
+body {
+    font-family: "Roboto", "Helvetica", "Sans-serif";
+    font-size: 1rem;
+    background: #EEEEEE;
+}
+
+h1, h2, h3, h4, h5 {
+    margin: 0;
+    padding: 0;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.flex-no_space {
+    display: flex;
+}
+
+.flex-around {
+    display: flex;
+    justify-content: space-around;
+}
+
+.active {
+    display: block;
+}
+
+.content-wrapper {
+    position: relative;
+    margin-left: 13%;
+    top: 50px;
+}
+
+.hide {
+    display: none;
+}
+
+.vertical-dots:after {
+    content: '\2807';
+    font-size: 1.3rem;
+    color: #888;
+    cursor: pointer;
+}
+
+.vertical-dots {
+    display: none;
+}
+
+/* Navigation */
+header {
+    width: 100%;
+    background-color:rgb(19, 50, 173);
+    position: fixed;
+    z-index: 3;
+}
+
+.nav-picture img.nav-pic {
+    cursor: pointer;
+    border-radius: 50%;
+    position: relative;
+    transform: translateY(-50%);
+    top: 50%;
+}
+
+/* navigation popup */
+#navigation-popup {
+    border: 1px solid #f8f9fa;
+    box-shadow: 2px 4px 10px #888888;
+    border-radius: 1px;
+    position: fixed;
+    background: #fff;
+    z-index: 20;
+    top: 37px;
+    right: 0;
+    margin: 0.5rem;
+    display: none;
+}
+
+#navigation-popup .user-email-header {
+    line-height: 25px;
+    margin-left: 1rem;
+}
+
+#navigation-popup .user-email-header div:first-child {
+    font-size: 1.2rem;
+}
+
+#navigation-popup .user-email-header div:nth-child(2) {
+    font-size: 0.9rem;
+}
+
+#navigation-popup .header-log-nav .guest-user {
+    line-height: 50px;
+    font-size: 1.2rem;
+    margin-left: 1rem;
+}
+
+#navigation-popup .body-log-nav a {
+    list-style: none;
+    display: block;
+    text-decoration: none;
+    color: black;
+}
+
+#navigation-popup .body-log-nav i {
+    color: black;
+    margin-right: 0.5rem;
+    font-size: 1.3rem;
+    width: 25px;
+}
+
+#navigation-popup .body-log-nav span {
+    margin-right: 2rem;
+    font-size: 0.9rem;
+}
+
+#navigation-popup .header-log-nav {
+    padding: 1rem 3.5rem 1rem 1rem;
+    border-bottom: 1px solid rgb(224, 218, 218);
+}
+
+#navigation-popup .body-log-nav {
+    margin-top: 0.5rem;   
+}
+
+#navigation-popup .body-log-nav a {
+    padding: 0.5rem 1rem;
+}
+
+#navigation-popup .body-log-nav a:hover {
+    background: #f8f9fa;
+}
+
+#navigation-popup .header-log-nav img {
+    border-radius: 50%;
+}
+
+/* side navigation */
+
+#side-nav {
+    width: 13%;
+    height: 100%;
+    background: #fff;
+    position: fixed;
+    z-index: 2;
+}
+
+#side-nav aside {
+    position: relative;
+    top: 50px;
+}
+
+#logo {
+    font-weight: 800;
+    color: #fff;
+    text-decoration: none;
+    position: relative;
+    cursor: pointer;
+}
+
+#logo i {
+    font-size: 1.5rem;
+    display: inline-block;
+    position: relative;
+    transform: translateY(-50%);
+    top: 50%;
+    color: rgb(245, 224, 66);
+}
+
+#logo span {
+    font-size: 1.3rem;
+    display: inline-block;
+    position: relative;
+    transform: translateY(-50%);
+    top: 50%;
+}
+
+#logo i {
+    text-decoration: none;
+
+}
+
+#logo a span {
+    color: white;
+}
+
+#top-nav .nav-container {
+    margin: 0 40px 0 30px;
+}
+
+#search {
+   width: 45%;
+   position: relative;
+   margin: 5px 0;
+}
+
+#search input {
+    position: relative;
+    float: left;
+    border-radius: 4px 0px 0px 4px;
+    width: 80%;
+    height: 30px;
+    padding: 0 15px;
+    font-size: 1rem;
+    border: none;
+}
+
+#search button {
+    border-radius: 0px 4px 4px 0px;
+    border: none;
+    position: relative;
+    top: 5px;
+    width: 60px;
+    height: 30px;
+    cursor: pointer;
+}
+
+#search button,input:focus
+{ 
+    outline: 0
+}
+
+/* Follow */
+#side-nav {
+    overflow: hidden;
+    padding-bottom: 5rem;
+}
+
+#side-nav:hover {
+    overflow-y: scroll; 
+}
+
+#side-nav::-webkit-scrollbar {
+    width: 5px;
+}
+
+#side-nav::-webkit-scrollbar-track {
+    background: white;
+}
+
+#side-nav::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10rem;
+}
+  
+
+#followers_count {
+    margin: 1rem;
+}
+
+#followed-forums .follow {
+    position: relative;
+    padding: 0.5rem;
+}
+
+#followed-forums a {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#followed-forums a:visited {
+    color: black;
+}
+
+#followed-forums img  {
+    border-radius: 50%;
+}
+
+#followed-forums .follow_name {
+    line-height: 35px;
+    margin-left: 0.5rem;
+    font-weight: 550;
+    font-size: 0.9rem;
+}
+
+#followed-forums .follow-link:hover{
+    display: block;
+    background: #f8f9fa;
+}
+
+/* Error */
+.error_message {
+    color: red;
+    font-size: 11px;
+}
+
+/* Login Form */
+#loginForm {
+    position: relative;
+    background:#fff;
+    border: 1px solid #ced4da;
+    border-radius: 3px;
+    max-width: 600px;
+    margin: 0 auto;
+    top: 150px;
+}
+
+#loginContainer {
+    position: relative;
+    padding: 3rem 9.5rem;
+}
+
+#loginForm .login_heading {
+    display: block;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+#loginForm .login_input input {
+    height: 35px;
+    padding: 0 10px;
+    margin-top: 1rem;
+    border: 1px solid #ced4da;
+}
+
+#loginForm .login_button {
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: rgb(17, 65, 133);
+    padding: 0.8rem 0;
+    border-radius: 2px; 
+    border: none;
+    color:white;
+}
+
+#loginForm .login_button:hover {
+    background-color: rgb(11, 52, 110);
+}
+
+#loginForm a {
+    font-size: 0.9rem;
+    text-decoration: none;
+    display: block;
+}
+
+#loginForm a:hover {
+    text-decoration: underline;
+}
+
+#loginForm .forgot_pass {
+    margin: 1rem 0 0 0;
+}
+
+#loginForm .login_new {
+    text-align: center;
+    margin: 1rem 0;
+}
+
+#loginForm input {
+    width: 100%;
+}
+
+#loginForm .login_error {
+    color: red;
+    font-size: 11px;
+}
+
+/* Register Form */
+#regisForm {
+    position: relative;
+    background:#fff;
+    border: 1px solid #ced4da;
+    border-radius: 3px;
+    max-width: 600px;
+    margin: 0 auto;
+    top: 150px;
+}
+
+#regisContainer {
+    position: relative;
+    padding: 3rem 9.5rem;
+}
+
+#regisForm .regis_input input {
+    height: 35px;
+    padding: 0 10px;
+    margin-top: 1rem;
+    border: 1px solid #ced4da;
+}
+
+#regisForm .regis_button {
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: rgb(17, 65, 133);
+    padding: 0.8rem 0;
+    border-radius: 2px; 
+    border: none;
+    color:white;
+    margin: 1rem 0 0 0;
+}
+
+#regisForm .regis_heading {
+    display: block;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+#regisFormregis_button:hover {
+    background-color: rgb(11, 52, 110);
+}
+
+#regisForm a {
+    font-size: 0.9rem;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    margin: 1rem 0;
+}
+
+#regisForm a:hover {
+    text-decoration: underline;
+}
+
+#regisForm input {
+    width: 100%;
+}
+
+/* Account Form */
+#accountForm {
+    position: relative;
+    background:#fff;
+    border: 1px solid #ced4da;
+    border-radius: 3px;
+    max-width: 600px;
+    margin: 0 auto;
+    top: 150px;
+}
+
+#accountContainer {
+    overflow: hidden;
+    position: relative;
+    padding: 3rem;
+}
+
+#accountForm .profile img {
+    border-radius: 50%;
+}
+
+#accountForm .profile_details {
+    margin-left: 1.5rem;
+}
+
+#accountForm .profile_details span {
+    display: block;
+}
+
+#accountForm .user_account {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+#accountForm .email_account {
+    font-size: 1rem;
+}
+
+#accountForm .account_details {
+    margin-top: 2rem;
+}
+
+#accountForm .account_details input {
+    display: block;
+}
+
+#accountForm .account_details h4 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+#accountForm .account_details label {
+    font-size: 0.9rem;
+    margin: 1rem 0 0.3rem 0;
+    display: block;
+}
+
+#accountForm .account_details input:not(.update_user_pic) {
+    width: 100%;
+    height: 35px;
+    padding: 0 10px;
+    border: 1px solid #ced4da;
+}
+
+#accountForm .update_user_pic {
+    margin-top: 0.5rem;
+}
+
+#accountForm .update_acc_button {
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    background-color: rgb(17, 65, 133);
+    padding: 0.6rem;
+    border-radius: 2px; 
+    border: none;
+    float: right;
+    color:white;
+}
+
+#accountForm .update_acc_button:hover {
+    background-color: rgb(11, 52, 110);
+}
+
+#accountForm .delete_user_pic {
+    margin: 1rem 0;
+    font-size: 0.8rem;
+    cursor: pointer;
+    background-color: rgb(17, 65, 133);
+    padding: 0.6rem;
+    border-radius: 2px; 
+    border: none;
+    color:white;
+}
+
+#accountForm .delete_user_pic:hover {
+    background-color: rgb(11, 52, 110);
+}
+
+
+/* Create Forum */
+#create_forum {
+    position: relative;
+    background:#fff;
+    border: 1px solid #ced4da;
+    border-radius: 3px;
+    max-width: 600px;
+    margin: 0 auto;
+    top: 150px;
+}
+
+#create_forum_container {
+    overflow: hidden;
+    position: relative;
+    padding: 3rem;
+}
+
+#create_forum input:not(.create_forum_button), textarea {
+    width: 100%;
+    display: block;
+    border: 1px solid #ced4da;
+}
+
+#create_forum input {
+    height: 35px;
+    padding: 0 10px;
+}
+
+#create_forum textarea {
+    resize: none;
+    height: 100px;
+    outline: 0
+}
+
+#create_forum label {
+    font-size: 0.9rem;
+    margin: 1rem 0 0.3rem 0;
+    display: block;
+}
+
+#create_forum .create_forum_button {
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    background-color: rgb(17, 65, 133);
+    padding: 0.6rem;
+    border-radius: 2px; 
+    border: none;
+    float: right;
+    color:white;
+}
+
+#create_forum .create_forum_button:hover {
+    background-color: rgb(11, 52, 110);
+}
+
+/* Create Post */
+#create_post {
+    position: relative;
+    background:#fff;
+    border: 1px solid #ced4da;
+    border-radius: 3px;
+    max-width: 600px;
+    margin: 0 auto;
+    top: 150px; 
+}
+
+#create_post_container {   
+    overflow: hidden;
+    position: relative;
+    padding: 3rem;
+}
+
+#create_post input:not(.create_post_button), textarea {
+    width: 100%;
+    display: block;
+    border: 1px solid #ced4da;
+}
+
+#create_post input {
+    height: 35px;
+    padding: 0 10px;
+}
+
+#create_post textarea {
+    resize: none;
+    height: 100px;
+    outline: 0
+}
+
+#create_post label {
+    font-size: 0.9rem;
+    margin: 1rem 0 0.3rem 0;
+    display: block;
+}
+
+#create_post .create_post_button {
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    background-color: rgb(17, 65, 133);
+    padding: 0.6rem;
+    border-radius: 2px; 
+    border: none;
+    float: right;
+    color:white;
+}
+
+/* Update Forum */
+#update_forum {
+    position: relative;
+    background:#fff;
+    border: 1px solid #ced4da;
+    border-radius: 3px;
+    max-width: 600px;
+    margin: 0 auto;
+    top: 150px;
+}
+
+#update_forum_container {
+    overflow: hidden;
+    position: relative;
+    padding: 3rem;
+}
+
+#update_forum textarea {
+    resize: none;
+    height: 100px;
+    outline: 0
+}
+
+#update_forum h4 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+#update_forum input {
+    display: block;
+}
+
+#update_forum label {
+    font-size: 0.9rem;
+    margin: 1rem 0 0.3rem 0;
+    display: block;
+}
+
+#update_forum input:not(.update_forum_pic, .update_forum_button), textarea {
+    width: 100%;
+    height: 35px;
+    padding: 0 10px;
+    border: 1px solid #ced4da;
+}
+
+#update_forum .update_forum_button {
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    background-color: rgb(17, 65, 133);
+    padding: 0.6rem;
+    border-radius: 2px; 
+    border: none;
+    float: right;
+    color:white;
+}
+
+#update_forum .update_forum_button:hover {
+    background-color: rgb(11, 52, 110);
+}
+
+#update_forum .forum_name {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    
+}
+
+#update_forum img {
+    border-radius: 50%;
+}
+
+#update_forum .delete_forum_pic {
+    margin: 1rem 0;
+    font-size: 0.8rem;
+    cursor: pointer;
+    background-color: rgb(17, 65, 133);
+    padding: 0.6rem;
+    border-radius: 2px; 
+    border: none;
+    color:white;
+}
+
+#update_forum  .delete_forum_pic:hover {
+    background-color: rgb(11, 52, 110);
+}
+
+/* Update Post */
+
+#update_post {
+    position: relative;
+    background:#fff;
+    border: 1px solid #ced4da;
+    border-radius: 3px;
+    max-width: 600px;
+    margin: 0 auto;
+    top: 150px;
+}
+
+#update_post_container {
+    overflow: hidden;
+    position: relative;
+    padding: 3rem;
+}
+
+#update_post input:not(.update_post_button), textarea {
+    width: 100%;
+    display: block;
+    border: 1px solid #ced4da;
+}
+
+#update_post input {
+    height: 35px;
+    padding: 0 10px;
+}
+
+#update_post textarea {
+    resize: none;
+    height: 100px;
+    outline: 0
+}
+
+#update_post label {
+    font-size: 0.9rem;
+    margin: 1rem 0 0.3rem 0;
+    display: block;
+}
+
+#update_post .update_post_button {
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    background-color: rgb(17, 65, 133);
+    padding: 0.6rem;
+    border-radius: 2px; 
+    border: none;
+    float: right;
+    color:white;
+}
+
+#update_post .update_post_button:hover {
+    background-color: rgb(11, 52, 110);
+}
+
+/* forum */
+#forum {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    padding: 1.5rem;
+    margin-bottom: 5rem;
+}
+
+#forum section {
+    width: 650px;
+    margin: 0 auto;
+}
+
+#forum section h1 {
+    margin-left: 1rem;
+}
+
+#forum a {
+    text-decoration: none;
+    color: black;
+}
+
+#forum span.post_forum {
+    margin-left: 0.5rem;
+    line-height: 25px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+#forum span.post_user {
+    margin-left: 1rem;
+    line-height: 25px;
+    font-size: 0.8rem;
+    font-weight: 300;
+}
+
+.time {
+    font-size: 0.8rem;
+    margin-left: 0.3rem; 
+    font-weight: 300;
+}
+
+#forum .post_title {
+    font-weight: 600;
+}
+
+#forum .post_comm_count {
+    font-size: 0.7rem;
+}
+
+#forum .post_content {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+#forum .post_heading a:hover {
+    text-decoration: underline;
+}
+
+#forum img {
+    border-radius: 50%;
+}
+
+#forum section article {
+    padding: 0.5rem 1.5rem;
+    background-color: #fff;
+    border: 1px solid #999;
+    margin: 1rem 0;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+#forum section article:hover {
+    border: 1px solid black;
+}
+
+.pagination_bar {
+    margin-top: 2rem;
+}
+
+.pagination_bar a {
+    display: inline-block;
+    border-radius: 5px;
+    text-align: center;
+    width: 30px;
+    margin-left: 3px;
+    text-decoration: none;
+    padding: 4px;
+    color: black;
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+}
+
+#forum a.page_active {
+    color:white;
+    background-color: rgb(11, 106, 176);
+}
+
+.pagination_bar a.page_active {
+    color:white;
+    background-color: rgb(11, 106, 176);
+}
+
+#forum-header {
+    background: #f8f9fa;
+}
+
+#forum-header-container {
+    max-width: 800px;
+    padding: 1rem 0;
+    margin: 0 auto;
+    line-height: 100px;
+}
+
+#forum-header .forum-pic {
+    border-radius: 50%;
+}
+
+#forum-header .forum-name span {
+    display: block;
+}
+
+#forum-header .forum-name span:first-child {
+    font-weight: 700;
+    margin-left: 2rem;
+    font-size: 2rem;
+    line-height: 60px;
+}
+
+#forum-header .forum-name span:nth-child(2) {
+    margin-left: 2rem;
+    font-size: 1rem;
+    line-height: 15px;
+}
+
+#forum-header button {
+    width: 100px;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    background-color: #fff;
+    border: 1px solid black;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+#forum-header .button-pad:hover {
+    background-color: rgb(17, 65, 133);
+    border: 1px solid rgb(17, 65, 133);
+    border: none;
+    color: white;
+}
+
+#forum-header .button-container {
+    margin-right: 1rem;
+}
+
+#forum-header .forum-update {
+    margin-left: 1rem;
+}
+
+#post_comment {
+    margin: 1rem 0 3rem 0;
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid#999;
+    background-color: #fff;
+}
+
+#post_comment img {
+    border-radius: 50%;
+}
+
+#post_comment a {
+    line-height: 45px;
+    width: 100%;
+}
+
+#post_comment input {
+    padding-left: 1rem;
+    width: 97%;
+    margin-left: 0.7rem;
+    border-radius: 3px;
+    border: 1px solid#999;
+    height: 39px;
+}
+
+#forum-columns {
+    max-width: 1050px;
+    margin: 0 auto;
+}
+
+#forum-side {
+    width: 450px;
+}
+
+#forum-side aside {
+    border: 1px solid#999;
+    background-color: #fff;
+    margin-top: 1rem;
+    margin-left: 1rem;
+    border-radius: 5px;
+}
+
+#forum-side span {
+    display: block;
+}
+
+#forum-side span.side-title {
+    background-color: #999;
+    padding: 1rem 0.8rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+#forum-side .side-main {
+    padding: 1rem;
+}
+
+#forum-side .side-about {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #999;
+}
+
+#count-side {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;   
+    border-bottom: 1px solid #999;
+}
+
+#count-side div span:first-child {
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+}
+
+#count-side div span:nth-child(2) {
+    font-size: 0.7rem;
+}
+
+/* User Post */
+#user-header {
+    background: #f8f9fa;
+}
+
+#user-header-container {
+    max-width: 650px;
+    padding: 1rem 0;
+    margin: 0 auto;
+    line-height: 100px;
+}
+
+#user-header .user-pic {
+    border-radius: 50%;
+}
+
+#user-header .user-name span {
+    display: block;
+}
+
+#user-header .user-name span:first-child {
+    font-weight: 700;
+    margin-left: 2rem;
+    font-size: 2rem;
+    line-height: 60px;
+}
+
+#user-header .user-name span:nth-child(2) {
+    margin-left: 2rem;
+    font-size: 1rem;
+    line-height: 15px;
+}
+
+/* Comment */
+
+#comment-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 1.5rem;
+    margin-bottom: 5rem;
+}
+
+#comment-container {
+    position: relative;
+    max-width: 1250px;
+    border-radius: 4px;
+    margin: 0 auto;
+}
+
+#forum-side button {
+    border-radius: 4px;
+    margin-top: 1rem;
+    padding: 0.5rem 0;
+    cursor: pointer;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid black;
+}
+
+#forum-side button:hover {
+    background-color: rgb(17, 65, 133);
+    border: 1px solid rgb(17, 65, 133);
+    color: white;
+}
+
+#forum-name {
+    margin-bottom: 1rem;
+}
+
+#forum-name img {
+    border-radius: 50%;
+}
+
+#forum-name span {
+    margin-left: 1rem;
+    line-height: 50px;
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+#main-comment {
+    position: relative;
+    width: 800px;
+    margin-top: 1rem;
+    background-color: #fff;
+    border: 1px solid #999;
+    border-radius: 4px;
+    padding: 1rem 2rem;
+}
+
+#post-section {
+    margin-bottom: 2rem;
+}
+
+#comm-post-header {
+    line-height: 40px;
+}
+
+#comm-post-header img {
+    border-radius: 50%;
+}
+
+#comm-post-header a {
+    text-decoration: none;
+    color: black;
+}
+
+#comm-post-header a:hover {
+    text-decoration: underline;
+}
+
+#comm-post-header .comm-forum-name {
+    margin-left: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+#comm-post-header .comm-username {
+    margin-left: 1rem;
+    font-size: 0.9rem;
+}
+
+#post-section .comm-title {
+    font-weight: 600;
+    margin: 0.5rem 0;
+}
+
+#post-section .comm-content {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+#post-section .comm-comment {
+    font-size: 0.8rem;
+}
+
+#commentForm {
+    margin-bottom: 1rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid #999;
+    overflow: hidden;    
+}
+
+#commentForm textarea {
+    outline: 0;
+    font-size: 1.1rem;
+    padding: 5px;
+    border-radius: 3px;
+    height: 60px;
+    resize: none;
+}
+
+#commentForm textarea:focus {   
+    resize: none;
+}
+
+#commentForm input {
+    margin-top: 0.5rem;
+    float: right;
+    width: 100px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    background-color: rgb(17, 65, 133);
+    padding: 0.5rem 0;
+    border-radius: 3px; 
+    border: none;
+    color:white;
+}
+
+#commentForm input:hover {
+    background-color: rgb(11, 52, 110);
+}
+/* User Comments */
+
+#comment-section .comment-header {
+    line-height: 40px;
+}
+
+#comment-section .user-comment-username a {
+    text-decoration: none;
+    color: black;
+}
+
+#comment-section .user-comment-username a:hover {
+    text-decoration: underline;
+}
+
+#comment-section .user-comment-img img {
+   border-radius: 50%;
+}
+
+#comment-section .user-comment-username {
+    margin-left: 0.5rem;
+    font-size: 0.9rem;
+}
+
+#comment-section .user-comment-content {
+    font-size: 1rem;
+    margin: 0.2rem 0 0.8rem 0px;
+}
+
+.comment-content {
+    margin-bottom: 3rem;
+}
+
+#comment-section .view-reply {
+    margin-bottom: 1rem;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: rgb(11, 52, 110);
+    cursor: pointer;
+}
+
+/* User Reply */
+
+#comment-section .reply-header {
+    line-height: 30px;
+}
+
+#comment-section .user-reply {
+    margin: 0 40px;
+}
+
+#comment-section .user-reply-username a {
+    text-decoration: none;
+    color: black;
+}
+
+#comment-section .user-reply-username a:hover {
+    text-decoration: underline;
+}
+
+#comment-section .user-reply-img img {
+   border-radius: 50%;
+}
+
+#comment-section .user-replyt-username {
+    margin-left: 0.5rem;
+    font-size: 0.9rem;
+}
+
+#comment-section .user-reply-content {
+    font-size: 0.8rem;
+    margin: 0 0 1rem 40px;
+}
+
+#comment-section .reply-comment {
+    font-size: 0.7rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    cursor: pointer;
+}
+
+#comment-wrapper .post-update {
+    margin-top: 0.5rem;
+    width: 100px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    background-color: rgb(17, 65, 133);
+    padding: 0.5rem 0;
+    border-radius: 3px; 
+    border: none;
+    color:white;
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+#comment-wrapper .post-update:hover {
+    background-color: rgb(11, 52, 110);
+}
+
+#comment-wrapper .post-delete {
+    margin-top: 0.5rem;
+    width: 100px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    background-color: rgb(17, 65, 133);
+    padding: 0.5rem 0;
+    border-radius: 3px; 
+    border: none;
+    color:white;
+    margin-left: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+#comment-wrapper .post-delete:hover {
+    background-color: rgb(11, 52, 110);
+}
+
+/* Popup reply */
+
+#comment-section .multi-popup-submit {
+    width: 80px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    background-color: rgb(17, 65, 133);
+    padding: 0.4rem 0;
+    border-radius: 3px; 
+    border: none;
+    color:white;
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+}
+
+#comment-section .multi-popup-submit:hover {
+    background-color: rgb(11, 52, 110);
+}
+
+#comment-section .multi-popup-cancel {
+    width: 80px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    background-color: rgb(17, 65, 133);
+    padding: 0.4rem 0;
+    border-radius: 3px; 
+    border: none;
+    color:white;
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+}
+
+#comment-section .multi-popup-cancel:hover {
+    background-color: rgb(11, 52, 110);
+}
+
+#comment-section .multi-popup-content {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+#comment-section textarea.multi-popup-content {
+    font-size: 1rem;
+    padding-left: 4px;
+    resize: none;
+    height: 50px;
+    outline: 0;
+    border-radius: 3px;
+}
+
+#comment-section .multi-popup-buttons {
+    margin-bottom: 0.5rem;
+    float: right;
+}
+
+#comment-section .multi-popup-forms {
+    overflow: hidden;
+}
+
+#comment-section .dot-popup {
+    /* select: none will prevent popup from been highlighted by cursor */
+    user-select: none; /* supported by Chrome and Opera */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    border-radius: 2px;
+    box-shadow: 2px 4px 10px #888888;
+    background: #fff;
+    width: 100px;
+    position: absolute;
+    right: 0;
+}
+
+#comment-section .dot-update-container:hover {
+    background: #f8f9fa;
+}
+
+#comment-section .dot-delete-container button:hover {
+    background: #f8f9fa;
+}
+
+#comment-section .dot-comment {
+    transform: translate(75px,-50px);
+}
+
+#comment-section .dot-reply {
+    transform: translate(40px,-80px);
+}
+
+#comment-section .dot-update {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+    display: block;
+    text-align: center;
+}
+
+#comment-section .dot-report {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+    display: block;
+    text-align: center;
+}
+
+#comment-section .dot-report:hover {
+    background: #f8f9fa;
+}
+
+
+#comment-section .dot-popup {
+    display: block;
+    cursor: pointer;
+}
+
+#comment-section .dot-delete {
+    font-size: 0.9rem;
+    background: #fff;
+    display: block;
+    border: none;
+    padding: 0.5rem 1.75rem;
+    cursor: pointer;
+}
+
+/* Pop up */
+#popup {
+    z-index: 10;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%; 
+    background-color: rgba(0, 0, 0, 0.9); 
+    display: none;
+}
+
+#popup-wrapper {
+    border-radius: 1px;
+    position: relative;
+    background-color: #fff;
+    width: 300px;
+    margin: 0 auto;
+    top: 300px;
+}
+
+#popup-container {
+    padding: 1.5rem;
+    overflow: hidden;
+}
+
+#popup .popup-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+#popup .popup-desc {
+    font-size: 0.8rem;
+    display: block;
+}
+
+#popup form {
+    display: inline-block
+}
+
+#popup .popup-delete {
+    width: 90px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    background-color: rgb(17, 65, 133);
+    padding: 0.7rem 0;
+    border-radius: 2px; 
+    border: none;
+    color:white;
+    font-weight: 600;
+}
+
+#popup .popup-delete:hover {
+    background-color: rgb(11, 52, 110);
+}
+
+ 
+#popup .popup-cancel {
+    display: inline-block;
+    width: 90px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    background-color: rgb(17, 65, 133);
+    padding: 0.7rem 0;
+    border-radius: 2px; 
+    border: none;
+    color:white;
+    margin-left: 0.5rem;
+    font-weight: 600;
+}
+
+#popup .popup-cancel:hover {
+    background-color: rgb(11, 52, 110);
+}
+
+#popup .popup-buttons {
+    margin-top: 2rem;
+    float: right;
+}
+
+/* Search Results */
+#search-result {
+    padding: 2rem;
+}
+
+#search-result-wrapper {
+    margin: 0 auto;
+    width: 800px;
+}
+
+#search-result-container {
+    border-radius: 4px;
+    padding: 2rem;
+    background: #fff;
+}
+
+#search-result .search-image {
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+
+#search-result .search-details {
+    line-height: 30px;
+}
+
+#search-result-container a {
+    text-decoration: none;
+    color: black;
+}
+
+#search-result .search-name {
+    margin-right: 2rem;
+    font-weight: 700;
+}
+
+#search-result .searched-item {
+    padding: 0.3rem 0.5rem;
+    cursor: pointer;
+}
+
+#search-result .searched-item:hover {
+    background: #f8f9fa;
+}
+
+#search-result .search-followers {
+    font-size: 0.9rem;
+    margin-right: 1.5rem;
+}
+
+#search-result .search-posts {
+    font-size: 0.9rem;
+    margin-right: 1.5rem;
+}
+
+/* MEDIA QUERIES */
+@media (max-width: 992px) {
+    /* START: overall layout change */
+    #search button {
+        width: 40px;
+    }
+
+    #search input {
+        font-size: 0.8rem;
+    }
+
+    #logo {
+        margin-right: 0.5rem;
+    }
+
+    #logo i {
+        font-size: 1.2rem;
+    }
+
+    #logo span {
+        font-size: 1rem;
+    }
+
+    #forum-main {
+        margin: 0 auto;
+    }
+
+    h5 {
+        font-size: 0.7rem;
+    }
+
+    #side-nav .follow {
+        padding: 0.3rem;
+    }
+
+    #side-nav .follow img {
+        height: 30px;
+        width: 30px;
+    }
+
+    #side-nav .follow span.follow_name {
+        font-size: 0.7rem;
+        line-height: 30px;
+    }
+
+    /* END: overall layout change */
+
+    #top-nav .nav-container {
+        margin: 0 20px 0 15px;
+    }
+
+    #forum-side {
+        display: none;
+    }
+
+    #comment-section .dot-comment {
+        transform: translate(-30px,-20px);
+    }
+    
+    #comment-section .dot-reply {
+        transform: translate(-60px,-60px);
+    }
+
+}
+
+
+@media (max-width: 768px) {
+    /* START: overall layout change */
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.70rem;
+    }
+
+    h3 {
+        font-size: 1.2rem;
+    }
+
+    #side-nav .follow span.follow_name {
+        display: none;
+    }
+
+    #followers_count h5 {
+        display: none;
+    }
+
+    #side-nav {
+        width: 40px;
+    }
+
+    .content-wrapper {
+        margin-left: 40px;
+    }
+
+    #logo {
+        margin-right: 0.2rem;
+        line-height: 30px;
+    }
+
+    #logo i {
+        font-size: 1rem;
+        line-height: 30px;
+    }
+
+    #logo span {
+        font-size: 0.8rem;
+    }
+
+    #search input {
+        padding: 0 0.5rem;
+    }
+
+    #search button {
+        width: 30px;
+        padding: 0;
+    }
+     /* END: overall layout change */
+}
+
+@media (max-width: 576px) {
+
+}

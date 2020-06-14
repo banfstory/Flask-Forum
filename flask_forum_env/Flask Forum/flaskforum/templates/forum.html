@@ -1,0 +1,106 @@
+{% extends "layout.html" %}
+{% block content %}
+<div id="forum-header">
+    <div id="forum-header-container" class="flex">
+        <div class="profile flex-no_space">
+            <img class="forum-pic" src="{{ url_for('static', filename='forum_pics/' + forum[0].display_picture) }}" height="100" width="100">
+            <div class="forum-name">
+                <div>
+                    <span> {{ forum[0].name }}  </span>
+                    <span> Forum </span>
+                </div>  
+            </div>
+        </div>
+        <div class="button-container flex-no_space">
+            {% if follow_forum %}
+                <form method="POST" action="{{ url_for('users.unfollow', id=forum[0].id) }}">
+                    <button class="forum-unjoin button-pad"> JOINED </button>
+                </form>
+            {% else %}
+                <form method="POST" action="{{ url_for('users.follow', id=forum[0].id) }}">
+                    <button class="forum-join button-pad"> JOIN </button>
+                </form>
+            {% endif %}
+            {% if current_user==forum[0].owner %}
+            <a class="forum-update" href="{{ url_for('forums.update_forum', id=forum[0].id) }}">
+                <button class=button-pad> UPDATE </button>
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div id="forum-columns">
+    <div id="forum">
+        <div class="flex-no_space">
+            <div id="forum-main">
+                <section style="margin:0">
+                    <div id="post_comment" class="flex-no_space">
+                        {% if current_user.is_authenticated %}
+                            <img src="{{ url_for('static', filename='display_pics/' + current_user.display_picture) }}" height="45" width="45"> 
+                        {% else %}
+                            <img src="{{ url_for('static', filename='display_pics/deafult.png') }}" height="40" width="40">
+                        {% endif %}
+                        <a href="{{ url_for('forums.create_post',name=forum[0].name) }}">
+                            <input placeholder="Create Post"> </input>
+                        </a>
+                    </div>
+                    {% for post in posts.items %}
+                        <article class="article_post">
+                            <div class="post_heading flex-no_space">  
+                                <a href="{{ url_for('users.user_posts',username=post[0].author.username) }}"><img src="{{ url_for('static', filename='display_pics/' + post[0].author.display_picture) }}" height="25" width="25"></a> 
+                                <span class="post_user"> 
+                                    Posted by <a href="{{ url_for('users.user_posts',username=post[0].author.username) }}"> {{ post[0].author.username }} </a>
+                                    <span class="time">  
+                                        {% if post[1] < 1 %} {{ (post[1] * 60) |round|int }} minutes ago {% elif post[1] < 24 %} {{ post[1] |round|int }} hours ago  {% elif post[1] / 24 < 7 %} {{ (post[1] / 24) |round|int }} days ago
+                                        {% elif post[1] / 24 < 30 %} {{ (post[1] / 24 / 7) |round|int }} weeks ago {% elif post[1] / 24 < 365 %} {{ (post[1] / 24 / 30) |round|int }} months ago 
+                                        {% else %} {{ (post[1] / 24 / 365) |round|int }} years ago {% endif %}
+                                    </span>  
+                                </span> 
+                            </div>
+                            <div class="post_link">
+                                <a href="{{ url_for('forums.comments', id=post[0].id) }}">
+                                    <div class="post_title"> {{ post[0].title }} </div> 
+                                    <p class="post_content"> {{ post[0].content }} </p>
+                                    <div class="post_comm_count"> {{ post[2] }} Comments </div>
+                                </a>
+                            </div>
+                        </article>
+                    {% endfor %} 
+                    <div class="pagination_bar">
+                        {% for page_num in posts.iter_pages(left_edge=3, right_edge=3, left_current=3, right_current=5) %}
+                            {% if page_num %}
+                                {% if posts.page == page_num %}
+                                    <a href="{{ url_for('forums.forum', name=forum[0].name, page=page_num) }}" class="page_active"> {{ page_num }} </a>
+                                {% else %}
+                                    <a href="{{ url_for('forums.forum', name=forum[0].name, page=page_num) }}"> {{ page_num }} </a>
+                                {% endif %}
+                            {% else %}
+                                <span> ... </span>
+                            {% endif %}
+                        {%  endfor %}
+                    </div>
+                </section>
+            </div>
+            <div id="forum-side">
+                <aside>          
+                    <span class="side-title"> ABOUT FORUM </span>
+                    <div class="side-main">
+                        <span class="side-about"> {{ forum[0].about }} </span>
+                        <div id="count-side" class="flex-around">
+                            <div>
+                                <span> {{ forum[0].followers }} </span>
+                                <span> Followers </span>
+                            </div>
+                            <div>
+                                <span> {{ forum[0].num_of_post }} </span>
+                                <span> Posts </span>
+                            </div>
+                        </div>
+                        <span> Created in {{ forum[1] }} </span>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

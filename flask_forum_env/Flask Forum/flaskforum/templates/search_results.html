@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block content %}
+<div id="search-result">
+    <div id="search-result-wrapper">
+        <div id="search-result-container">
+            <h4 style="margin-bottom: 2rem"> Search Results: </h4>
+            {% for forum in result.items %}
+            <a href="{{ url_for('forums.forum', name=forum.name) }}">
+                <div class="searched-item flex-no_space">
+                    <img class="search-image" src="{{ url_for('static', filename='forum_pics/' + forum.display_picture) }}" height="30" width="30">
+                    <div class="search-details flex" style="width:100%">
+                        <span class="search-name"> {{ forum.name }} </span>
+                        <div>
+                            <span class="search-followers"> {{ forum.followers }} followed </span>
+                            <span class="search-posts"> {{ forum.num_of_post }} posted </span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        <div class="pagination_bar">
+            {% for page_num in result.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                {% if page_num %}
+                    {% if result.page == page_num %}
+                        <a href="{{ url_for('forums.search', q=search, page=page_num) }}" class="page_active" > {{ page_num }} </a>
+                    {% else %}
+                        <a href="{{ url_for('forums.search', q=search, page=page_num) }}"> {{ page_num }} </a>
+                    {% endif %}
+                {% else %}
+                    <span> ... </span>
+                {% endif %}
+            {%  endfor %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

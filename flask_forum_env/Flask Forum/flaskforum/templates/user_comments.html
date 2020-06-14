@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+<div id="forum">
+    <section>
+        <a href="{{url_for('users.user_posts', username=user.username)}}"> Show User Posts </a>
+        <h4> Commented by: {{ user.username }} with {{ comments.total }} comments </h4>
+        {% for comment in comments.items %}
+        <article>
+            Post title: <a href="{{url_for('forums.comments', id=comment.comment_post.id)}}"> {{ comment.comment_post.title }} </a> published by <a href="{{url_for('users.user_posts', username=comment.comment_post.author.username)}}">{{ comment.comment_post.author.username }}</a>
+            Comment: {{ comment.content }} with {{ comment.num_of_reply }} replied
+        </article>
+        {% endfor %} 
+        {% for page_num in comments.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+            {% if page_num %}
+                {% if comments.page == page_num %}
+                    <a href="{{ url_for('users.user_comments', username=user.username, page=page_num) }}" style="color:red"> {{ page_num }} </a>
+                {% else %}
+                    <a href="{{ url_for('users.user_comments', username=user.username, page=page_num) }}"> {{ page_num }} </a>
+                {% endif %}
+            {% else %}
+                ...
+            {% endif %}
+        {%  endfor %}
+    </section>
+</div>
+{% endblock content %}

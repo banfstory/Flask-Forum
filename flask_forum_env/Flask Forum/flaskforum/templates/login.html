@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div id="loginForm">
+    <div id="loginContainer">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <span class="login_heading"> Log in to Flask Forum </span>
+            <div class="login_input">
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            {% for message in messages %}
+                            <span class="login_error"> {{ message }} </span>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                {{ form.username(placeholder="Username") }}
+                {{ form.password(placeholder="Password") }}
+            </div>
+            <a class="forgot_pass" href="#"> Forgot Password? </a>
+            {{ form.submit(class="login_button") }}
+            <a class="login_new" href="{{ url_for('users.register') }}"> Create an account </a>
+        </form>
+    </div>
+</div>
+{% endblock content %}

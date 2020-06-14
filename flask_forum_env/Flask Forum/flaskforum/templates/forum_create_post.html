@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block content %}
+<div id="create_post">
+    <div id="create_post_container">
+        <form method="POST" action="{{ url_for('forums.create_post', name=forum.name) }}">
+            {{ form.hidden_tag() }}
+
+            <h4> Create Post for {{ forum.name }} Forum </h4>
+            {{ form.title.label() }}
+            {{ form.title() }}
+            {% if form.title.errors %}
+                {% for error in form.title.errors %}
+                    <span class="error_message"> {{ error }} </span>
+                {% endfor %}
+            {% endif %}
+        
+            {{ form.content.label() }}
+            {{ form.content() }}
+            {% if form.content.errors %}
+                {% for error in form.content.errors %}
+                    <span class="error_message"> {{ error }} </span>
+                {% endfor %}
+            {% endif %}
+
+            {{ form.submit(class="create_post_button") }}
+        </form>
+    </div>
+</div>
+{% endblock content %}
