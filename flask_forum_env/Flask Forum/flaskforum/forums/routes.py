@@ -62,17 +62,16 @@ def comments(id):
     #post_comments = db.session.query(Comment,(db.func.julianday('now')-db.func.julianday(Comment.date_commented))*24).order_by(Comment.date_commented.desc()).filter_by(post_id=id).paginate(page=page, per_page=10)
     comment = CommentForm()
     reply = ReplyForm()
-    """
-    temp_reply = db.engine.execute('SELECT *, (julianday("now")-julianday(date_reply))*24 as date FROM Reply WHERE comment_id IN(SELECT id FROM Comment WHERE post_id=' + str(id) + ') ORDER BY date_reply desc LIMIT ' + str(per_p) + ' OFFSET ' + str(per_p * (page-1)))
+    temp_reply = db.engine.execute('SELECT Reply.*, User.username, User.display_picture, (julianday("now")-julianday(date_reply))*24 as date FROM Reply INNER JOIN User ON Reply.user_id=User.id WHERE Reply.comment_id IN(SELECT id FROM Comment WHERE ' + str(id) + ') ORDER BY Reply.date_reply desc LIMIT ' + str(per_p) + ' OFFSET ' + str(per_p * (page-1)))
+    #temp_reply = db.engine.execute('SELECT *, (julianday("now")-julianday(date_reply))*24 as date FROM Reply WHERE comment_id IN(SELECT id FROM Comment WHERE post_id=' + str(id) + ') ORDER BY date_reply desc LIMIT ' + str(per_p) + ' OFFSET ' + str(per_p * (page-1)))
     res_reply = dict()
     for t in temp_reply:
        if t.comment_id not in res_reply:
            res_reply[t.comment_id] = list()
        res_reply[t.comment_id].append(t)
-    """
     follow_forum = Follow_Forum.query.filter(Follow_Forum.forum_id==post[0].forum.id).filter(Follow_Forum.user_id==current_user.id).first() if current_user.is_authenticated else None
     follow = Follow_Forum.query.filter_by(user_id=current_user.id) if current_user.is_authenticated else None
-    return render_template('comments.html', follow_forum=follow_forum, follow=follow, comment=comment, reply=reply, post=post, post_comments=post_comments, searchForm=searchForm, id=id, replyForm=replyForm, title= post[0].title + " - Post", forum_date=forum_date)
+    return render_template('comments.html', follow_forum=follow_forum, follow=follow, comment=comment, reply=reply, post=post, post_comments=post_comments, searchForm=searchForm, id=id, replyForm=replyForm, title= post[0].title + " - Post", forum_date=forum_date, res_reply=res_reply)
 
 @forums.route('/forum/<int:id>/comments/post_comment', methods=['POST'])
 @login_required
