@@ -62,7 +62,7 @@ def comments(id):
     #post_comments = db.session.query(Comment,(db.func.julianday('now')-db.func.julianday(Comment.date_commented))*24).order_by(Comment.date_commented.desc()).filter_by(post_id=id).paginate(page=page, per_page=10)
     comment = CommentForm()
     reply = ReplyForm()
-    temp_reply = db.engine.execute('SELECT Reply.*, User.username, User.display_picture, (julianday("now")-julianday(date_reply))*24 as date FROM Reply INNER JOIN User ON Reply.user_id=User.id WHERE Reply.comment_id IN(SELECT id FROM Comment WHERE ' + str(id) + ') ORDER BY Reply.date_reply desc LIMIT ' + str(per_p) + ' OFFSET ' + str(per_p * (page-1)))
+    temp_reply = db.engine.execute('SELECT Reply.*, User.username, User.display_picture, User.id as u_id, (julianday("now")-julianday(date_reply))*24 as date FROM Reply INNER JOIN User ON Reply.user_id=User.id WHERE Reply.comment_id IN(SELECT id FROM Comment WHERE ' + str(id) + ') ORDER BY Reply.date_reply desc LIMIT ' + str(per_p) + ' OFFSET ' + str(per_p * (page-1)))
     #temp_reply = db.engine.execute('SELECT *, (julianday("now")-julianday(date_reply))*24 as date FROM Reply WHERE comment_id IN(SELECT id FROM Comment WHERE post_id=' + str(id) + ') ORDER BY date_reply desc LIMIT ' + str(per_p) + ' OFFSET ' + str(per_p * (page-1)))
     res_reply = dict()
     for t in temp_reply:

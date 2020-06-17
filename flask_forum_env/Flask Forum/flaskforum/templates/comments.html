@@ -136,16 +136,21 @@
                                 <div class="view-reply reply-view-more"> View {{ user_comment[2] }} replies </div>
                                 <div class="view-reply reply-view-less hide"> Hide {{ user_comment[2] }} replies </div>
                                 <div class="reply-content hide">
-                                    {% for user_reply in user_comment[0].reply %}
-                                        {% if user_comment[0].id==user_reply.comment_id %}
+                                    {% if user_comment[0].id in res_reply %}
+                                        {% for user_reply in res_reply[user_comment[0].id] %}
                                             <div class="user-reply"> 
                                                 <div class="reply-header flex">
                                                     <div class="flex-no_space">
-                                                        <a class="user-reply-img" href="{{ url_for('users.user_posts',username=user_reply.reply_user.username) }}">
-                                                            <img src="{{ url_for('static', filename='display_pics/' + user_reply.reply_user.display_picture) }}" height="30" width="30">
+                                                        <a class="user-reply-img" href="{{ url_for('users.user_posts',username=user_reply.username) }}">
+                                                            <img src="{{ url_for('static', filename='display_pics/' + user_reply.display_picture) }}" height="30" width="30">
                                                         </a> 
                                                         <span class="user-comment-username"> 
-                                                            Posted by <a href="{{ url_for('users.user_posts',username=user_reply.reply_user.username) }}"> {{ user_reply.reply_user.username }} </a>
+                                                            Posted by <a href="{{ url_for('users.user_posts',username=user_reply.username) }}"> {{ user_reply.username }} </a>
+                                                            <span class="time">  
+                                                                {% if user_reply.date < 1 %} {{ (user_reply.date * 60) |round|int }} minutes ago {% elif user_reply.date < 24 %} {{ user_reply.date |round|int }} hours ago  {% elif user_reply.date / 24 < 7 %} {{ (user_reply.date / 24) |round|int }} days ago
+                                                                {% elif user_reply.date / 24 < 30 %} {{ (user_reply.date / 24 / 7) |round|int }} weeks ago {% elif user_reply.date / 24 < 365 %} {{ (user_reply.date / 24 / 30) |round|int }} months ago 
+                                                                {% else %} {{ (user_reply.date / 24 / 365) |round|int }} years ago {% endif %}
+                                                            </span>  
                                                         </span> 
                                                     </div>                               
                                                     <div class="dots-popup-boundary">
@@ -155,7 +160,7 @@
                                                 <div class="user-reply-content">{{ user_reply.content }}</div>
                                                 <div class="dots-popup-boundary">
                                                     <div class="dot-popup dot-reply" style="display:none"> 
-                                                        {% if user_reply.reply_user == current_user %}
+                                                        {% if user_reply.u_id == current_user.id %}
                                                             <div class="dot-update-container reply-dots">
                                                                 <a class="dot-update"> Update </a>
                                                             </div>
@@ -187,8 +192,8 @@
                                                     </form>
                                                 </div>    
                                             </div>          
-                                        {% endif %}
-                                    {% endfor %}
+                                        {% endfor %}
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
