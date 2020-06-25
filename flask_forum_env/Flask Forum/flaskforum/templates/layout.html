@@ -63,14 +63,14 @@
     <div id="side-nav">
         <aside>
             <div id="followers_count">
-                <h5> FOLLOWED FORUMS <span> ({{ follow.count() }}) </span> </h5>
+                <h5> FOLLOWED FORUMS <span> ({{ follow | length }}) </span> </h5>
             </div>
             <div id="followed-forums">
                 {% for Follow in follow %}
-                    <a class="follow-link" href="{{ url_for('forums.forum', name=Follow.follow_forum.name) }}">
+                    <a class="follow-link" href="{{ url_for('forums.forum', name=Follow.name) }}">
                         <div class="follow flex-no_space">
-                            <img src="{{ url_for('static', filename='forum_pics/' + Follow.follow_forum.display_picture) }}" height="35" width="35">
-                            <span class="follow_name"> {{ Follow.follow_forum.name }} </span>
+                            <img src="{{ url_for('static', filename='forum_pics/' + Follow.display_picture) }}" height="35" width="35">
+                            <span class="follow_name"> {{ Follow.name }} </span>
                         </div>
                     </a>
                 {% endfor %}
