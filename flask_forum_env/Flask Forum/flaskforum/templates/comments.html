@@ -48,7 +48,7 @@
                     </div>
                 {% endif %}
                 <div id="commentForm">
-                    <form method="POST" action="{{ url_for('forums.post_comment', id=post[0].id, page=post_comments.page) }}">
+                    <form method="POST" action="{{ url_for('forums.post_comment', id=post[0].id) }}">
                         {{ comment.hidden_tag() }}
                         {% if comment.comment.errors %}
                             {% for error in comment.comment.errors %}

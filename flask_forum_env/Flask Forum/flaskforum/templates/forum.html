@@ -38,7 +38,7 @@
                         {% if current_user.is_authenticated %}
                             <img src="{{ url_for('static', filename='display_pics/' + current_user.display_picture) }}" height="45" width="45"> 
                         {% else %}
-                            <img src="{{ url_for('static', filename='display_pics/deafult.png') }}" height="40" width="40">
+                            <img src="{{ url_for('static', filename='display_pics/default.png') }}" height="40" width="40">
                         {% endif %}
                         <a href="{{ url_for('forums.create_post',name=forum[0].name) }}">
                             <input placeholder="Create Post"> </input>

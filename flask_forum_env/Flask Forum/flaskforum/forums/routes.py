@@ -221,14 +221,13 @@ def delete_reply(id):
 @login_required
 def post_comment(id):
     form = CommentForm()
-    page = request.args.get('page',1,type=int) #represented as a '?page='
     if form.validate_on_submit():
         post = Post.query.filter_by(id=id).first()
         post.num_of_comments+=1
         comment = Comment(content=form.comment.data, user_id=current_user.id, post_id=id)
         db.session.add(comment)
         db.session.commit()
-    return redirect(url_for('forums.comments', id=id, page=page))
+    return redirect(url_for('forums.comments', id=id))
 
 @forums.route('/forum/<int:id>/comments/reply_comment', methods=['POST'])
 @login_required
