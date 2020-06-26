@@ -17,7 +17,9 @@ def forum(name):
     forum_followers = len(Forum.query.filter_by(id=forum[0].id).first().follow_forum)
     follow_forum = User.query.filter_by(id=current_user.id).first().follow.filter_by(id=forum[0].id).first() if current_user.is_authenticated else None
     page = request.args.get('page',1,type=int) #represented as a '?page='
-    posts = db.session.query(Post,(db.func.julianday('now')-db.func.julianday(Post.date_posted))*24,db.func.count(Comment.post_id)).order_by(Post.date_posted.desc()).outerjoin(Comment, Post.id==Comment.post_id).group_by(Post.id).filter(Post.forum_id==forum[0].id).group_by(Post.id).paginate(page=page, per_page=10)
+    # get the post, hours since the post was made, count the number of comments for the next 10 posts from a certain start point
+    posts = db.session.query(Post,(db.func.julianday('now')-db.func.julianday(Post.date_posted))*24,db.func.count(Comment.post_id)).order_by(Post.date_posted.desc())\
+        .outerjoin(Comment, Post.id==Comment.post_id).group_by(Post.id).filter(Post.forum_id==forum[0].id).paginate(page=page, per_page=10)
     #posts = db.session.query(Post,(db.func.julianday('now')-db.func.julianday(Post.date_posted))*24).order_by(Post.date_posted.desc()).filter_by(forum_id=forum[0].id).paginate(page=page, per_page=10)
     return render_template('forum.html', follow=follow, posts=posts, forum=forum, searchForm=searchForm, follow_forum=follow_forum, title=forum[0].name, forum_followers=forum_followers)
 
@@ -55,16 +57,22 @@ def comments(id):
     searchForm = SearchForm()
     replyForm = ReplyForm()
     per_p = 10
-    post = db.session.query(Post, (db.func.julianday('now')-db.func.julianday(Post.date_posted))*24, db.func.count(Comment.post_id)).outerjoin(Comment, Post.id==Comment.post_id).filter(Post.id==id).first_or_404()
+    post = db.session.query(Post, (db.func.julianday('now')-db.func.julianday(Post.date_posted))*24, db.func.count(Comment.post_id)).outerjoin(Comment, Post.id==Comment.post_id)\
+        .filter(Post.id==id).first_or_404()
     #post = db.session.query(Post,(db.func.julianday('now')-db.func.julianday(Post.date_posted))*24).filter_by(id=id).first_or_404()
     forum_followers = len(Forum.query.filter_by(id=post[0].forum.id).first().follow_forum)
     forum_date = db.session.query(Forum, db.func.strftime('%d-%m-%Y',Forum.date_created)).filter_by(id=post[0].forum_id).first()
     page = request.args.get('page',1,type=int)
-    post_comments = db.session.query(Comment, (db.func.julianday('now')-db.func.julianday(Comment.date_commented))*24, db.func.count(Reply.comment_id)).outerjoin(Reply, Comment.id == Reply.comment_id).filter(Comment.post_id==id).group_by(Comment.id).order_by(Comment.date_commented.desc()).paginate(page=page, per_page=per_p)
+    # get the comment, hours since the comment was made, count the number of replys for the next 10 comments from a certain start point of that post
+    post_comments = db.session.query(Comment, (db.func.julianday('now')-db.func.julianday(Comment.date_commented))*24, db.func.count(Reply.comment_id))\
+        .outerjoin(Reply, Comment.id == Reply.comment_id).filter(Comment.post_id==id).group_by(Comment.id).order_by(Comment.date_commented.desc()).paginate(page=page, per_page=per_p)
     #post_comments = db.session.query(Comment,(db.func.julianday('now')-db.func.julianday(Comment.date_commented))*24).order_by(Comment.date_commented.desc()).filter_by(post_id=id).paginate(page=page, per_page=10)
     comment = CommentForm()
     reply = ReplyForm()
-    temp_reply = db.engine.execute('SELECT Reply.*, User.username, User.display_picture, User.id as u_id, (julianday("now")-julianday(date_reply))*24 as date FROM Reply INNER JOIN User ON Reply.user_id=User.id WHERE Reply.comment_id IN(SELECT id FROM Comment WHERE post_id=' + str(id) + ' ORDER BY date_commented desc LIMIT ' + str(per_p) + ' OFFSET ' + str(per_p * (page-1)) + ') ORDER BY Reply.date_reply desc')
+    # get the reply, some of the user data, hours since the reply was made and only select the reply of the next 10 comments from starting point of that post
+    temp_reply = db.engine.execute('SELECT Reply.*, User.username, User.display_picture, User.id as u_id, (julianday("now")-julianday(date_reply))*24 as date \
+        FROM Reply INNER JOIN User ON Reply.user_id=User.id WHERE Reply.comment_id IN(SELECT id FROM Comment WHERE post_id=' + str(id) + ' ORDER BY date_commented desc LIMIT ' 
+        + str(per_p) + ' OFFSET ' + str(per_p * (page-1)) + ') ORDER BY Reply.date_reply desc')
     #temp_reply = db.engine.execute('SELECT *, (julianday("now")-julianday(date_reply))*24 as date FROM Reply WHERE comment_id IN(SELECT id FROM Comment WHERE post_id=' + str(id) + ') ORDER BY date_reply desc LIMIT ' + str(per_p) + ' OFFSET ' + str(per_p * (page-1)))
     res_reply = dict()
     for t in temp_reply:
