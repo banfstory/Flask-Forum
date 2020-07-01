@@ -219,7 +219,7 @@
                                 <span> Posts </span>
                             </div>
                         </div>
-                        <span> Created in {{ forum_date[1] }} </span>
+                        <span class="side-date"> Created in {{ forum_date[1] }} </span>
                         {% if follow_forum %}
                             <form method="POST" action="{{ url_for('users.unfollow', id=post[0].forum.id) }}">
                                 <button class="forum-unjoin"> JOINED </button>

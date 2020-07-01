@@ -79,6 +79,7 @@ def follow(id):
     follow_forum = User.query.filter_by(id=current_user.id).first().follow.filter_by(id=id).first() if current_user.is_authenticated else None
     if not follow_forum:
         Forum.query.filter_by(id=forum.id).first().follow_forum.append(current_user) if current_user.is_authenticated else None
+        forum.followers += 1
         db.session.commit()
     return redirect(url_for('forums.forum', name=forum.name))
 
@@ -91,7 +92,8 @@ def unfollow(id):
         user = User.query.filter_by(id=current_user.id).first()
         if user.follow.filter_by(id=forum.id).first():
             user.follow.remove(forum)
-        db.session.commit()
+            forum.followers -= 1
+            db.session.commit()
      return redirect(url_for('forums.forum', name=forum.name))
 
 @users.route("/user/<string:username>/posts")

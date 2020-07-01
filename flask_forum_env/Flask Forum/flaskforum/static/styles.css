@@ -1028,6 +1028,10 @@ header {
     font-size: 0.7rem;
 }
 
+.side-date {
+    text-align: center;
+}
+
 /* User Post */
 #user-header {
     background: #f8f9fa;

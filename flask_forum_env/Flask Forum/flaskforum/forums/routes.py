@@ -129,9 +129,10 @@ def delete_post(id):
     if post.author != current_user:
         abort(403)
     comment = Comment.query.filter_by(post_id=id) 
-    reply = Reply.query.filter_by(comment_id=comment.first().id) if comment == None else None # if no comment exist for this post then reply is none
+    reply = db.session.query(Reply).outerjoin(Comment, Comment.id==Reply.comment_id).filter(Comment.post_id==post.id) if comment == None else None # if no comment exist for this post then reply is none
     if reply:
-        reply.delete() #multiple rows deleted at once
+        for r in reply:
+            db.session.delete(r)
     if comment:
         comment.delete() #multiple rows deleted at once
     post.forum.num_of_post-=1
