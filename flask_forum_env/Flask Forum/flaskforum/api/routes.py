@@ -15,6 +15,8 @@ Headers required :
     'Content-Type : application/json' - methods: POST, PUT
 Body required: 
     'raw,JSON' - methods: POST, PUT
+Authorization:
+    'Basic Authentication'
 """
 api = Blueprint('api', __name__)
 
@@ -53,9 +55,12 @@ def token_required(verify_token): # verify token that has been given
 @token_required
 def api_create_post(c_user):
     data = request.get_json()
-    title = data['title']
-    content = data['content']
-    forum_id = data['forum_id']
+    try:
+        title = data['title']
+        content = data['content']
+        forum_id = data['forum_id']
+    except:
+        return jsonify({'message' : 'Invalid request'})
     forum = Forum.query.get(forum_id)
     if forum is None:
         return jsonify({'message' : 'Invalid request'})
@@ -70,8 +75,11 @@ def api_create_post(c_user):
 @token_required
 def api_create_comment(c_user):
     data = request.get_json()
-    content = data['content']
-    post_id = data['post_id']
+    try:
+        content = data['content']
+        post_id = data['post_id']
+    except:
+        return jsonify({'message' : 'Invalid request'})
     post = Post.query.get(post_id)
     if post is None:
         return jsonify({'message' : 'Invalid request'})
@@ -86,8 +94,11 @@ def api_create_comment(c_user):
 @token_required
 def api_create_reply(c_user):
     data = request.get_json()
-    content = data['content']
-    comment_id = data['comment_id']
+    try:
+        content = data['content']
+        comment_id = data['comment_id']
+    except:
+        return jsonify({'message' : 'Invalid request'})
     comment = Comment.query.get(comment_id)
     if comment is None:
         return jsonify({'message' : 'Invalid request'})
@@ -102,8 +113,14 @@ def api_create_reply(c_user):
 @token_required
 def api_create_forum(c_user):
     data = request.get_json()
-    name = data['name']
-    about = data['about']
+    try:
+        name = data['name']
+        about = data['about']
+    except:
+        return jsonify({'message' : 'Invalid request'})
+    exist = Forum.query.filter_by(name=name).first()
+    if exist:
+        return jsonify({'message' : 'Forum name already exist'})
     forum = Forum(name=name, about=about, owner_id=c_user.id)
     db.session.add(forum)
     db.session.commit()
@@ -118,8 +135,11 @@ def api_update_post(c_user, id):
     if post is None:
         return jsonify({'message' : 'Invalid request'})
     data = request.get_json()
-    title = data['title']
-    content = data['content']
+    try:
+        title = data['title']
+        content = data['content']
+    except:
+        return jsonify({'message' : 'Invalid request'})
     post.title = title
     post.content = content
     db.session.commit()
@@ -133,7 +153,10 @@ def api_update_comment(c_user, id):
     if comment is None:
         return jsonify({'message' : 'Invalid request'})
     data = request.get_json()
-    content = data['content']
+    try:
+        content = data['content']
+    except:
+        return jsonify({'message' : 'Invalid request'})
     comment.content = content
     db.session.commit()
     result = comment_schema.dump(comment)
@@ -146,7 +169,10 @@ def api_update_reply(c_user, id):
     if reply is None:
         return jsonify({'message' : 'Invalid request'})
     data = request.get_json()
-    content = data['content']
+    try:
+        content = data['content']
+    except:
+        return jsonify({'message' : 'Invalid request'})
     reply.content = content
     db.session.commit()
     result = reply_schema.dump(reply)
@@ -155,12 +181,15 @@ def api_update_reply(c_user, id):
 @api.route('/api/forum/<int:id>', methods=['PUT'])
 @token_required
 def api_update_forum(c_user, id):
-    forum = Forum.query.filter_by(id=id, user_id=c_user.id).first()
+    forum = Forum.query.filter_by(id=id, owner_id=c_user.id).first()
     if forum is None:
         return jsonify({'message' : 'Invalid request'})
     data = request.get_json()
-    about = data['about']
-    forum.content = content
+    try:
+        about = data['about']
+    except:
+        return jsonify({'message' : 'Invalid request'})
+    forum.about = about
     db.session.commit()
     result = forum_schema.dump(forum)
     return jsonify({'forum' : result})
@@ -188,7 +217,7 @@ def api_delete_post(c_user,id):
 @api.route('/api/comment/<int:id>', methods=['DELETE'])
 @token_required
 def api_delete_comment(c_user,id):
-    comment = Comment.query.filter_by(id=id, user_id=c_user.id)
+    comment = Comment.query.filter_by(id=id, user_id=c_user.id).first()
     if comment is None:
         return jsonify({'message' : 'Invalid request'})
     reply = Reply.query.filter_by(comment_id=comment.id)
@@ -203,7 +232,7 @@ def api_delete_comment(c_user,id):
 @api.route('/api/reply/<int:id>', methods=['DELETE'])
 @token_required
 def api_delete_reply(c_user,id):
-    reply = Reply.query.filter(id=id, user_id=c_user.id)
+    reply = Reply.query.filter_by(id=id, user_id=c_user.id).first()
     if reply is None:
         return jsonify({'message' : 'Invalid request'})
     reply.reply.num_of_reply -= 1
@@ -219,8 +248,6 @@ def api_get_posts():
     per_page = request.args.get('limit',5,type=int)
     user_id = request.args.get('user_id',None,type=int)
     forum_id = request.args.get('forum_id',None,type=int)
-    if user_id is None and forum_id is None:
-        return jsonify({'message' : 'Invalid request'})
     param = dict()
     if user_id:
         param['user_id'] = user_id
@@ -234,12 +261,12 @@ def api_get_posts():
     return jsonify({'posts' : result})
 
 @api.route('/api/post/<int:id>', methods=['GET'])
-def api_get_post():
+def api_get_post(id):
     post = Post.query.get(id)
     if post is None:
         return jsonify({'message' : 'Post not found'})
-    post_schema.dump(post)
-    return jsonify({'post' : post})
+    result = post_schema.dump(post)
+    return jsonify({'post' : result})
 
 @api.route('/api/comments', methods=['GET'])
 def api_get_comments():
@@ -247,8 +274,6 @@ def api_get_comments():
     per_page = request.args.get('limit',5,type=int)
     user_id = request.args.get('user_id',None,type=int)
     post_id = request.args.get('post_id',None,type=int)
-    if user_id is None and post_id is None:
-        return jsonify({'message' : 'Invalid request'})
     param = dict()
     if user_id:
         param['user_id'] = user_id
@@ -266,8 +291,8 @@ def api_get_comment(id):
     comment = Comment.query.get(id)
     if comment is None:
         return jsonify({'message' : 'Comment not found'})
-    comment_schema.dump(comment)
-    return jsonify({'comment' : comment})
+    result = comment_schema.dump(comment)
+    return jsonify({'comment' : result})
 
 @api.route('/api/replys', methods=['GET'])
 def api_get_replys():
@@ -275,8 +300,6 @@ def api_get_replys():
     per_page = request.args.get('limit',5,type=int)
     user_id = request.args.get('user_id',None,type=int)
     comment_id = request.args.get('comment_id',None,type=int)
-    if user_id is None and comment_id is None:
-        return jsonify({'message' : 'Invalid request'})
     param = dict()
     if user_id:
         param['user_id'] = user_id
@@ -294,16 +317,14 @@ def api_get_reply(id):
     reply = Reply.query.get(id)
     if reply is None:
         return jsonify({'message' : 'Reply not found'})
-    reply_schema.dump(reply)
-    return jsonify({'reply' : reply})
+    result = reply_schema.dump(reply)
+    return jsonify({'reply' : result})
 
 @api.route('/api/forums', methods=['GET'])
 def api_get_forums():
     page = request.args.get('page',1,type=int)
     per_page = request.args.get('limit',5,type=int)
-    user_id = request.args.get('user_id',None,type=int)
-    if user_id is None:
-        return jsonify({'message' : 'Invalid request'})
+    user_id = request.args.get('owner_id',None,type=int)
     param = dict()
     if user_id:
         param['owner_id'] = user_id
@@ -314,25 +335,43 @@ def api_get_forums():
     result = forums_schema.dump(forums)
     return jsonify({'forums' : result})
 
-@api.route('/api/forum/<int:id>', methods=['GET'])
-def api_get_forum(id):
-    forum = Forum.query.get(id)
+@api.route('/api/forum', methods=['GET'])
+def api_get_forum():
+    id = request.args.get('id',None,type=int)
+    name = request.args.get('name',None,type=str)
+    param = dict()
+    if id is None and name is None:
+        return jsonify({'message' : 'Invalid request'})
+    if id:
+        param['id'] = id
+    if name:
+        param['name'] = name
+    forum = Forum.query.filter_by(**param).first()
     if forum is None:
         return jsonify({'message' : 'Forum not found'})
-    forum_schema.dump(forum)
-    return jsonify({'forum' : forum})
+    result = forum_schema.dump(forum)
+    return jsonify({'forum' : result})
 
-@api.route('/api/user', methods=['GET'])
+@api.route('/api/users', methods=['GET'])
 def api_get_all_user():
     page = request.args.get('page',1,type=int)
     per_page = request.args.get('limit',5,type=int)
-    users = User.query.all().paginate(page=page, per_page=per_page).items
+    users = User.query.paginate(page=page, per_page=per_page).items
     result = users_schema.dump(users)
     return jsonify({'users' : result})
 
-@api.route('/api/user/<int:id>', methods=['GET'])
-def api_get_user(id):
-    user = User.query.get(id)
+@api.route('/api/user', methods=['GET'])
+def api_get_user():
+    id = request.args.get('id',None,type=int)
+    username = request.args.get('username',None,type=str)
+    param = dict()
+    if id is None and username is None:
+        return jsonify({'message' : 'Invalid request'})
+    if id:
+        param['id'] = id
+    if username:
+        param['username'] = username
+    user = User.query.filter_by(**param).first()
     if user is None:
         return jsonify({'message' : 'User not found'})
     result = user_schema.dump(user)
