@@ -128,14 +128,14 @@ def delete_post(id):
     name = post.forum.name
     if post.author != current_user:
         abort(403)
-    comment = Comment.query.filter_by(post_id=id) 
-    reply = db.session.query(Reply).outerjoin(Comment, Comment.id==Reply.comment_id).filter(Comment.post_id==post.id) if comment == None else None # if no comment exist for this post then reply is none
+    comment = Comment.query.filter_by(post_id=id)
+    reply = db.session.query(Reply).outerjoin(Comment, Comment.id==Reply.comment_id).filter(Comment.post_id==post.id) # if no comment exist for this post then reply is none
     if reply:
         for r in reply:
             db.session.delete(r)
     if comment:
         comment.delete() #multiple rows deleted at once
-    post.forum.num_of_post-=1
+    post.forum.num_of_post-=1   
     db.session.delete(post)
     db.session.commit()
     return redirect(url_for('forums.forum', name=name))

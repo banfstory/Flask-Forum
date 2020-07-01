@@ -16,7 +16,7 @@ Headers required :
 Body required: 
     'raw,JSON' - methods: POST, PUT
 Authorization:
-    'Basic Authentication'
+    'Basic Auth'
 """
 api = Blueprint('api', __name__)
 
@@ -202,7 +202,7 @@ def api_delete_post(c_user,id):
     if post is None:
         return jsonify({'message' : 'Invalid request'})
     comment = Comment.query.filter_by(post_id=post.id)
-    reply = db.session.query(Reply).outerjoin(Comment, Comment.id==Reply.comment_id).filter(Comment.post_id==post.id) if comment == None else None # if no comment exist for this post then reply is none
+    reply = db.session.query(Reply).outerjoin(Comment, Comment.id==Reply.comment_id).filter(Comment.post_id==post.id) # if no comment exist for this post then reply is none
     if reply:
         for r in reply:
             db.session.delete(r)
