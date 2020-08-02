@@ -4,6 +4,7 @@ from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length, Email, EqualTo, ValidationError
 from flask_login import current_user
 from flask_wtf.file import FileField, FileAllowed
+from flaskforum import bcrypt
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[InputRequired()])
@@ -44,3 +45,14 @@ class AccountForm(FlaskForm):
             email = User.query.filter_by(email=email.data).first()
             if email:
                 raise ValidationError('*This email is unavailable.')
+
+
+class ChangePasswordForm(FlaskForm):
+    old_password = PasswordField('Old Password', validators=[InputRequired()])
+    new_password = PasswordField('New Password', validators=[InputRequired()])
+    confirm_new_password = PasswordField('Confirm New Password', validators=[InputRequired(), EqualTo('new_password')])
+    submit = SubmitField('Change Password')
+
+    def validate_old_password(self, old_password):
+        if not bcrypt.check_password_hash(current_user.password, old_password.data):
+            raise ValidationError('*The old password you entered was incorrect. Please try again.')

@@ -2,7 +2,7 @@ from flask import Blueprint
 from flaskforum import db, bcrypt
 from flaskforum.users.utils import save_picture
 from flask import render_template, url_for, flash, redirect, request
-from flaskforum.users.forms import LoginForm, RegistrationForm, AccountForm
+from flaskforum.users.forms import LoginForm, RegistrationForm, AccountForm, ChangePasswordForm
 from flaskforum.forums.forms import SearchForm
 from flaskforum.models import User, Post, Forum, Comment
 from flask_login import login_user, current_user, logout_user, login_required
@@ -116,3 +116,17 @@ def user_comments(username):
     page = request.args.get('page',1,type=int) #represented as a '?page='
     comments = Comment.query.order_by(Comment.date_commented.desc()).filter_by(comment_user=user).paginate(page=page, per_page=10) 
     return render_template('user_comments.html', follow=follow, comments=comments, user=user, searchForm=searchForm, title=user.username + " comments")
+
+@users.route('/change_password_form', methods=['GET','POST'])
+@login_required
+def change_password_form():
+    form = ChangePasswordForm()  
+    image_file = url_for('static', filename='display_pics/' + current_user.display_picture)
+    if form.validate_on_submit():
+        hash_password = bcrypt.generate_password_hash(form.new_password.data).decode('utf-8')
+        current_user.password = hash_password
+        db.session.commit()
+        return redirect(url_for('main.home'))
+    follow = User.query.filter_by(id=current_user.id).first().follow.all() if current_user.is_authenticated else None
+    searchForm = SearchForm()
+    return render_template('change_password.html', form=form, searchForm=searchForm, follow=follow, image_file=image_file, title="Change Password")

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title> {{title}} </title>
@@ -10,15 +11,16 @@
     <link href="{{url_for('static', filename='styles.css')}}" type="text/css" rel="Stylesheet" />
     <title>Document</title>
 </head>
+
 <body>
     <div id="top-nav">
         <header>
             <div class="flex nav-container">
-                <div id="logo" class="flex-no_space">                  
+                <div id="logo" class="flex-no_space">
                     <a href="{{ url_for('main.home') }}"><i class="fab fa-forumbee"></i><span>Flask Forum </span></a>
                 </div>
                 <div id="search">
-                    <form method="POST" action="{{ url_for('forums.SearchResult') }}">                    
+                    <form method="POST" action="{{ url_for('forums.SearchResult') }}">
                         {{ searchForm.hidden_tag() }}
                         {{ searchForm.search(placeholder="Search") }}
                         <button> <i class="fas fa-search"></i> </button>
@@ -26,39 +28,47 @@
                 </div>
                 <div class="nav-picture">
                     {% if current_user.is_authenticated %}
-                        <img class="nav-pic" src="{{ url_for('static', filename='display_pics/' + current_user.display_picture) }}" height="35" width="35">
+                    <img class="nav-pic"
+                        src="{{ url_for('static', filename='display_pics/' + current_user.display_picture) }}"
+                        height="35" width="35">
                     {% else %}
-                        <img class="nav-pic" src="{{ url_for('static', filename='display_pics/default.png') }}" height="35" width="35">
+                    <img class="nav-pic" src="{{ url_for('static', filename='display_pics/default.png') }}" height="35"
+                        width="35">
                     {% endif %}
                 </div>
                 <div id="navigation-popup">
                     {% if current_user.is_authenticated %}
-                        <div class="header-log-nav flex">
-                            <img src="{{ url_for('static', filename='display_pics/' + current_user.display_picture) }}" height="50" width="50">
-                            <div class="user-email-header">
-                                <div> {{ current_user.username }} </div>
-                                <div> {{ current_user.email }} </div>
-                            </div>
+                    <div class="header-log-nav flex">
+                        <img src="{{ url_for('static', filename='display_pics/' + current_user.display_picture) }}"
+                            height="50" width="50">
+                        <div class="user-email-header">
+                            <div> {{ current_user.username }} </div>
+                            <div> {{ current_user.email }} </div>
                         </div>
-                        <div class="body-log-nav">
-                            <a href="{{ url_for('users.account') }}"> <i class="fas fa-id-badge"></i> <span> Account </span> </a>
-                            <a href="{{ url_for('forums.create_forum') }}"> <i class="fab fa-wpforms"></i> <span> Create Forum </span> </a>
-                            <a href="{{ url_for('users.logout') }}"> <i class="fas fa-sign-out-alt"></i> <span> Logout </span> </a>
-                        </div>
+                    </div>
+                    <div class="body-log-nav">
+                        <a href="{{ url_for('users.account') }}"> <i class="fas fa-id-badge"></i> <span> Account </span></a>
+                        <a href="{{ url_for('forums.create_forum') }}"> <i class="fab fa-wpforms"></i> <span> Create Forum </span> </a>
+                        <a href="{{ url_for('users.change_password_form') }}"> <i class="fas fa-lock"></i> <span> Change Password </span> </a>
+                        <a href="{{ url_for('users.logout') }}"> <i class="fas fa-sign-out-alt"></i> <span> Logout</span> </a>
+                    </div>
                     {% else %}
-                        <div class="header-log-nav flex">
-                            <img class="nav-pic" src="{{ url_for('static', filename='display_pics/default.png') }}" height="50" width="50">
-                            <div class="guest-user"> Guest </div>
-                        </div>
-                        <div class="body-log-nav">
-                            <a href="{{ url_for('users.login') }}"> <i class="fas fa-sign-in-alt"></i> <span> Login </span> </a>
-                            <a href="{{ url_for('users.register') }}"> <i class="fas fa-address-book"></i> <span> Sign up </span> </a>
-                        </div>
+                    <div class="header-log-nav flex">
+                        <img class="nav-pic" src="{{ url_for('static', filename='display_pics/default.png') }}"
+                            height="50" width="50">
+                        <div class="guest-user"> Guest </div>
+                    </div>
+                    <div class="body-log-nav">
+                        <a href="{{ url_for('users.login') }}"> <i class="fas fa-sign-in-alt"></i> <span> Login </span>
+                        </a>
+                        <a href="{{ url_for('users.register') }}"> <i class="fas fa-address-book"></i> <span> Sign up
+                            </span> </a>
+                    </div>
                     {% endif %}
                 </div>
             </div>
         </header>
-    </div> 
+    </div>
     {% if current_user.is_authenticated %}
     <div id="side-nav">
         <aside>
@@ -67,23 +77,25 @@
             </div>
             <div id="followed-forums">
                 {% for Follow in follow %}
-                    <a class="follow-link" href="{{ url_for('forums.forum', name=Follow.name) }}">
-                        <div class="follow flex-no_space">
-                            <img src="{{ url_for('static', filename='forum_pics/' + Follow.display_picture) }}" height="35" width="35">
-                            <span class="follow_name"> {{ Follow.name }} </span>
-                        </div>
-                    </a>
+                <a class="follow-link" href="{{ url_for('forums.forum', name=Follow.name) }}">
+                    <div class="follow flex-no_space">
+                        <img src="{{ url_for('static', filename='forum_pics/' + Follow.display_picture) }}" height="35"
+                            width="35">
+                        <span class="follow_name"> {{ Follow.name }} </span>
+                    </div>
+                </a>
                 {% endfor %}
             </div>
         </aside>
     </div>
     {% endif %}
     {% if current_user.is_authenticated %}
-        <div class="content-wrapper"> 
-    {% else %}
-        <div class="content-wrapper" style="margin:0"> 
-    {% endif %}
-    {% block content %} {% endblock %}
-    </div>  
+    <div class="content-wrapper">
+        {% else %}
+        <div class="content-wrapper" style="margin:0">
+            {% endif %}
+            {% block content %} {% endblock %}
+        </div>
 </body>
+
 </html>
