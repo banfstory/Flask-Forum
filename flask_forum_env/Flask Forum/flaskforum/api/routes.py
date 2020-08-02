@@ -33,7 +33,7 @@ def api_login():
     if not user:
         return jsonify({'message': 'Unauthorized Access'}), 401
     if bcrypt.check_password_hash(user.password, auth.password):
-        token = jwt.encode({'public_id': user.username, 'exp': datetime.utcnow(
+        token = jwt.encode({'username': user.username, 'exp': datetime.utcnow(
         ) + timedelta(minutes=60)}, app.config['SECRET_KEY'])
         return jsonify({'token': token.decode('UTF-8')})
     return jsonify({'message': 'Unauthorized Access'}), 401
@@ -49,7 +49,7 @@ def token_required(verify_token):  # verify token that has been given
             return jsonify({'message': 'Token is missing'}), 401
         try:
             data = jwt.decode(token, app.config['SECRET_KEY'])
-            user = User.query.filter_by(username=data['public_id']).first()
+            user = User.query.filter_by(username=data['username']).first()
         except:
             return jsonify({'message': 'Invalid Token'}), 401
         return verify_token(user, *args, **kwargs)
