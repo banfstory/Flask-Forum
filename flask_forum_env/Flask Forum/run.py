@@ -9,4 +9,4 @@ from flaskforum import app, manager
 # use 'python run.py db upgrade' to commit migration
 if __name__ == '__main__':
     # manager.run() #run to migrate database
-    app.run(debug=True)
+    app.run(debug=True, port=8080)
