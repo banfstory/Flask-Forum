@@ -61,6 +61,10 @@ h1, h2, h3, h4, h5 {
     display: none;
 }
 
+a:link {
+    color: black;
+}
+
 /* Navigation */
 header {
     width: 100%;
