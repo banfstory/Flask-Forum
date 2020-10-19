@@ -7,7 +7,7 @@ from flask_migrate import Migrate, MigrateCommand
 from flask_marshmallow import Marshmallow
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '482ddd77134754f904a4059804e9cd81' #security for forms 
+app.config['SECRET_KEY'] = '126d247fac6838979f70c076d0b056c8' #security for forms 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db' #create database file
 #app.config['SQLALCHEMY_ECHO'] = True # display all sql statements been made 
 
